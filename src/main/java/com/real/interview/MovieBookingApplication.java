@@ -6,8 +6,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 @SpringBootApplication
 @EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
-public class JavaBackendInterviewApplication {
+public class MovieBookingApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(JavaBackendInterviewApplication.class, args);
+		SpringApplication.run(MovieBookingApplication.class, args);
 	}
 }
