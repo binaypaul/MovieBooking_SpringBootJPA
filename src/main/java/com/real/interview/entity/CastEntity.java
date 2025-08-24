@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CAST")
+@Table(name = "CASTS")
 public class CastEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
