@@ -24,6 +24,6 @@ public class MovieEntity {
     private List<CastEntity> castEntities;
 
 
-//    @Version
-//    private Long version;
+    @Version
+    private Long version;
 }

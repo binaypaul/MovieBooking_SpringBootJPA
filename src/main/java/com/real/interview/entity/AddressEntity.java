@@ -19,6 +19,6 @@ public class AddressEntity {
     private CastEntity castEntity;
 
 
-//    @Version
-//    private Long version;
+    @Version
+    private Long version;
 }

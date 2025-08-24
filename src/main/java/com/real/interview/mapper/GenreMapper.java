@@ -10,6 +10,6 @@ public interface GenreMapper {
     @Mapping(source = "movieEntities", target = "movies")
     Genre fromEntity (GenreEntity genreEntity);
     @InheritInverseConfiguration
-//    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "version", ignore = true)
     GenreEntity toEntity (Genre genre);
 }

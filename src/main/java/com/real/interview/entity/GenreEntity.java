@@ -18,6 +18,6 @@ public class GenreEntity {
     private List<MovieEntity> movieEntities;
 
 
-//    @Version
-//    private Long version;
+    @Version
+    private Long version;
 }

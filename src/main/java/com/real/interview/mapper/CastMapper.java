@@ -11,6 +11,6 @@ public interface CastMapper {
     @Mapping(source = "movieEntities", target = "movies")
     Cast fromEntity (CastEntity castEntity);
     @InheritInverseConfiguration
-//    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "version", ignore = true)
     CastEntity toEntity (Cast person);
 }
