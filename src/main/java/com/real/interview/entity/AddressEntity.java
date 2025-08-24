@@ -15,10 +15,10 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String country;
-    @OneToOne(mappedBy = "addressEntity")
+    @OneToOne(mappedBy = "addressEntity", cascade = CascadeType.ALL)
     private CastEntity castEntity;
 
 
-    @Version
-    private Long version;
+//    @Version
+//    private Long version;
 }

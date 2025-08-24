@@ -13,13 +13,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "GENRE")
 public class GenreEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String type;
-    @OneToMany(mappedBy = "genreEntity")
+    @OneToMany(mappedBy = "genreEntity", cascade = CascadeType.ALL)
     private List<MovieEntity> movieEntities;
 
 
-    @Version
-    private Long version;
+//    @Version
+//    private Long version;
 }

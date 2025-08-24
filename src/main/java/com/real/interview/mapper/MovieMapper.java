@@ -11,6 +11,6 @@ public interface MovieMapper {
     @Mapping(source = "castEntities", target = "casts")
     Movie fromEntity (MovieEntity movieEntity);
     @InheritInverseConfiguration
-    @Mapping(target = "version", ignore = true)
+//    @Mapping(target = "version", ignore = true)
     MovieEntity toEntity (Movie movie);
 }

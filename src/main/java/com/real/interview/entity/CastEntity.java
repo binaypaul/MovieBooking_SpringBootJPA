@@ -20,13 +20,13 @@ public class CastEntity {
     private Integer age;
     @Enumerated(EnumType.STRING)
     private Sex sex;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity addressEntity;
-    @ManyToMany(mappedBy = "castEntities")
+    @ManyToMany(mappedBy = "castEntities", cascade = CascadeType.ALL)
     private List<MovieEntity> movieEntities;
 
 
-    @Version
-    private Long version;
+//    @Version
+//    private Long version;
 }

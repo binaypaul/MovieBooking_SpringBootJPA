@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Generated;
 
 @Data
 @NoArgsConstructor
@@ -14,18 +13,17 @@ import org.hibernate.annotations.Generated;
 @Table(name = "MOVIE")
 public class MovieEntity {
     @Id
-    @Generated
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private Integer rating;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "genre_id")
     private GenreEntity genreEntity;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<CastEntity> castEntities;
 
 
-    @Version
-    private Long version;
+//    @Version
+//    private Long version;
 }
