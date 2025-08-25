@@ -72,4 +72,22 @@ class MovieControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.name").value("Test Movie"));
     }
+
+    @Test
+    void testUpdate() throws Exception {
+        when(movieService.update(any(MovieEntity.class))).thenReturn(movieEntity);
+        mockMvc.perform(put("/movie/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"name\":\"3Idiots\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name").value("3Idiots"));
+    }
+
+    @Test
+    void testDelete() throws Exception {
+        when(movieService.delete(1L)).thenReturn("DELETED");
+        mockMvc.perform(delete("/movie/delete/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("DELETED"));
+    }
 }
