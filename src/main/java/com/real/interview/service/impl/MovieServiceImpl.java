@@ -1,13 +1,12 @@
 package com.real.interview.service.impl;
 
+import com.real.interview.entity.CastEntity;
 import com.real.interview.entity.MovieEntity;
-import com.real.interview.mapper.MovieMapper;
-import com.real.interview.model.Movie;
+import com.real.interview.repository.CastRepository;
 import com.real.interview.repository.MovieRepository;
 import com.real.interview.service.MovieService;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -19,16 +18,16 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class MovieServiceImpl implements MovieService {
-    private MovieRepository movieRepository;
-    private MovieMapper movieMapperImpl;
+    private final MovieRepository movieRepository;
+    private final CastRepository castRepository;
 
     private final int maxRetry = 5;
     private int retryCount = 0;
 
     @Autowired
-    public MovieServiceImpl(MovieRepository movieRepository, MovieMapper movieMapperImpl) {
+    public MovieServiceImpl(MovieRepository movieRepository, CastRepository castRepository) {
         this.movieRepository = movieRepository;
-        this.movieMapperImpl = movieMapperImpl;
+        this.castRepository = castRepository;
     }
 
     /**
@@ -38,35 +37,39 @@ public class MovieServiceImpl implements MovieService {
      * @return movies - page of movies
      */
     @Override
-    public Page<Movie> getAll(Pageable pageable) {
+    public Page<MovieEntity> getAll(Pageable pageable) {
         Page<MovieEntity> movieEntities =  movieRepository.findAll(pageable);
-        Page<Movie> movies = new PageImpl<Movie>(
-                movieEntities.stream()
-                        .map(me -> movieMapperImpl.fromEntity(me))
-                        .collect(Collectors.toList()),
-                pageable,
-                movieEntities.getTotalElements()
-        );
-        return  movies;
+        return  movieEntities;
     }
 
     /**
      * Add a movie
      *
-     * @param movie
+     * @param movieEntity
      * @return - status
      */
     @Override
-    public Movie addMovie(Movie movie) {
+    public MovieEntity addMovie(MovieEntity movieEntity) {
         MovieEntity resme = null;
-        MovieEntity movieEntity = movieMapperImpl.toEntity(movie);
         try {
-//            if(null != movieEntity.getReviewEntities()) {
-//                movieEntity.getReviewEntities()
-//                        .forEach(re -> re.setMovieEntity(movieEntity));
-//            }
-            if(null != movieEntity.getCastEntities()) {
-                movieEntity.getCastEntities().forEach(ce->ce.getAddressEntity().setCastEntity(ce));
+            if(null != movieEntity.getReviews()) {
+                movieEntity.getReviews().forEach(r->r.setMovie(movieEntity));
+            }
+            if(null!=movieEntity.getCasts()) {
+                List<CastEntity> mergedCasts = movieEntity.getCasts().stream()
+                        .map(ce-> {
+                            try {
+                                CastEntity cee = castRepository.getCastByName(ce.getName());
+                                if(cee != null)
+                                    return cee;
+                                else
+                                    return ce;
+                            } catch (Exception e) {
+                                return ce;
+                            }
+                        })
+                        .toList();
+                movieEntity.setCasts(mergedCasts);
             }
             resme = movieRepository.save(movieEntity);
         } catch (OptimisticLockingFailureException olfe) {
@@ -76,6 +79,6 @@ public class MovieServiceImpl implements MovieService {
                 resme = movieRepository.save(movieEntity);
             }
         }
-        return movieMapperImpl.fromEntity(resme);
+        return resme;
     }
 }

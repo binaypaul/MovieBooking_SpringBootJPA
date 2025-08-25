@@ -1,4 +1,4 @@
-package com.real.interview.model;
+package com.real.interview.entity;
 
 public enum Sex {
     MALE, FEMALE

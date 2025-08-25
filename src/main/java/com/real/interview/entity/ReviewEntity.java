@@ -17,7 +17,7 @@ public class ReviewEntity {
     private String review;
     @ManyToOne
     @JoinColumn(name = "movie_id")
-    private MovieEntity movieEntity;
+    private MovieEntity movie;
 
     @Version
     private Long version;

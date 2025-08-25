@@ -16,9 +16,10 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String country;
-    
-    @OneToOne(mappedBy = "addressEntity")
-    private CastEntity castEntity;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "address")
+    private CastEntity cast;
     @Version
     private Long version;
 }

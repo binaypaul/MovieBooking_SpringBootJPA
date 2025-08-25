@@ -1,7 +1,6 @@
 package com.real.interview.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.real.interview.model.Review;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,19 +28,11 @@ public class MovieEntity {
             joinColumns = @JoinColumn(name = "movie_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "cast_id", referencedColumnName = "id")
     )
-    private List<CastEntity> castEntities;
+    private List<CastEntity> casts;
 
-    @OneToMany(mappedBy = "movieEntity", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<ReviewEntity> reviewEntities;
-
-    // Add this method to handle the bidirectional relationship
-//    public void addReview(ReviewEntity reviewEntity) {
-//        if (reviewEntities == null) {
-//            reviewEntities = new ArrayList<>();
-//        }
-//        reviewEntities.add(reviewEntity);
-//        reviewEntity.setMovieEntity(this);
-//    }
+    @JsonIgnore
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<ReviewEntity> reviews;
 
     @Version
     private Long version;

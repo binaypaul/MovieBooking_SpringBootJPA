@@ -1,7 +1,6 @@
 package com.real.interview.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.real.interview.model.Sex;
 import jakarta.persistence.*;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -32,11 +31,11 @@ public class CastEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private AddressEntity addressEntity;
+    private AddressEntity address;
 
-    @ManyToMany(mappedBy = "castEntities", cascade = CascadeType.ALL)
-    private List<MovieEntity> movieEntities;
-
+    @JsonIgnore
+    @ManyToMany(mappedBy = "casts", cascade = CascadeType.ALL)
+    private List<MovieEntity> movies;
 
     @Version
     private Long version;

@@ -1,8 +1,7 @@
 package com.real.interview.controller;
 
-import com.real.interview.model.Movie;
+import com.real.interview.entity.MovieEntity;
 import com.real.interview.service.MovieService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +33,7 @@ public class MovieController {
      * @return movies - page of movies
      */
     @GetMapping("/getall")
-    public ResponseEntity<Page<Movie>> getAll(
+    public ResponseEntity<Page<MovieEntity>> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -42,7 +41,7 @@ public class MovieController {
     ) {
         Sort sort = asc ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        Page<Movie> movieList = movieServiceImpl.getAll(pageable);
+        Page<MovieEntity> movieList = movieServiceImpl.getAll(pageable);
         return ResponseEntity.ok(movieList);
     }
 
@@ -53,8 +52,8 @@ public class MovieController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-        Movie status = movieServiceImpl.addMovie(movie);
+    public ResponseEntity<MovieEntity> addMovie(@RequestBody MovieEntity movie) {
+        MovieEntity status = movieServiceImpl.addMovie(movie);
         return ResponseEntity.ok(status);
     }
 }
