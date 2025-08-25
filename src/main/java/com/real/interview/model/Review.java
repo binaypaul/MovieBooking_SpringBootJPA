@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Genre {
+public class Review {
     private long id;
-    private String type;
-    private List<Movie> movies;
+    private String review;
+    private Movie movie;
 }

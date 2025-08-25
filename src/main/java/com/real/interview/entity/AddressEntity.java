@@ -1,5 +1,6 @@
 package com.real.interview.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +16,9 @@ public class AddressEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String country;
-    @OneToOne(mappedBy = "addressEntity", cascade = CascadeType.ALL)
+    
+    @OneToOne(mappedBy = "addressEntity")
     private CastEntity castEntity;
-
-
     @Version
     private Long version;
 }

@@ -53,8 +53,8 @@ public class MovieController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseEntity<String> addMovie(@RequestBody Movie movie) {
-        String status = movieServiceImpl.addMovie(movie);
+    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
+        Movie status = movieServiceImpl.addMovie(movie);
         return ResponseEntity.ok(status);
     }
 }

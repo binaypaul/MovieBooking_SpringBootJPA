@@ -4,7 +4,8 @@ import com.real.interview.entity.AddressEntity;
 import com.real.interview.model.Address;
 import org.mapstruct.*;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+@Mapper(uses = {CastMapper.class, MovieMapper.class, ReviewMapper.class},
+        componentModel = MappingConstants.ComponentModel.SPRING,
         collectionMappingStrategy = CollectionMappingStrategy.SETTER_PREFERRED)
 public interface AddressMapper {
     @Mapping(source = "castEntity", target = "cast")

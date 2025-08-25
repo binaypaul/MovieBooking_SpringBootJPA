@@ -5,6 +5,7 @@ import com.real.interview.mapper.MovieMapper;
 import com.real.interview.model.Movie;
 import com.real.interview.repository.MovieRepository;
 import com.real.interview.service.MovieService;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -56,22 +57,25 @@ public class MovieServiceImpl implements MovieService {
      * @return - status
      */
     @Override
-    public String addMovie(Movie movie) {
-        String status = "SUCCESS";
+    public Movie addMovie(Movie movie) {
+        MovieEntity resme = null;
         MovieEntity movieEntity = movieMapperImpl.toEntity(movie);
         try {
-            movieRepository.save(movieEntity);
+//            if(null != movieEntity.getReviewEntities()) {
+//                movieEntity.getReviewEntities()
+//                        .forEach(re -> re.setMovieEntity(movieEntity));
+//            }
+            if(null != movieEntity.getCastEntities()) {
+                movieEntity.getCastEntities().forEach(ce->ce.getAddressEntity().setCastEntity(ce));
+            }
+            resme = movieRepository.save(movieEntity);
         } catch (OptimisticLockingFailureException olfe) {
             if(retryCount < maxRetry) {
                 log.error("OptimisticLockingFailureException... retrying.");
                 retryCount++;
-                addMovie(movie);
+                resme = movieRepository.save(movieEntity);
             }
-            status = "FAILED";
-        } catch (Exception e) {
-            status = "FAILED";
-            log.error("e: ", e);
         }
-        return status;
+        return movieMapperImpl.fromEntity(resme);
     }
 }

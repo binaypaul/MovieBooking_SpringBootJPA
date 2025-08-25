@@ -1,7 +1,6 @@
 package com.real.interview.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,13 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "GENRE")
-public class GenreEntity {
+@Table(name = "REVIEW")
+public class ReviewEntity {
     @Id
-    private String type;
-    @OneToMany(mappedBy = "genreEntity", cascade = CascadeType.ALL)
-    private List<MovieEntity> movieEntities;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String review;
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    private MovieEntity movieEntity;
 
     @Version
     private Long version;

@@ -1,5 +1,6 @@
 package com.real.interview.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,6 @@ public class Movie {
     private long id;
     private String name;
     private int rating;
-    private Genre genre;
+    private List<Review> reviews;
     private List<Cast> casts;
 }

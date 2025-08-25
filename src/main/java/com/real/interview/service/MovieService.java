@@ -1,5 +1,6 @@
 package com.real.interview.service;
 
+import com.real.interview.entity.MovieEntity;
 import com.real.interview.model.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,5 +18,5 @@ public interface MovieService {
      * @param movie
      * @return - status
      */
-    String addMovie(Movie movie);
+    Movie addMovie(Movie movie);
 }
