@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
+    @Column(columnDefinition = "CHECK (id <= 999999)")
     private Long id;
     private String name;
     private Integer rating;
