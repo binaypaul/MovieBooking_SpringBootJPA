@@ -78,9 +78,9 @@ class MovieControllerTest {
         when(movieService.update(any(MovieEntity.class))).thenReturn(movieEntity);
         mockMvc.perform(put("/movie/update")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"name\":\"3Idiots\"}"))
+                        .content("{\"name\":\"Test Movie\"}"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("3Idiots"));
+                .andExpect(jsonPath("$.name").value("Test Movie"));
     }
 
     @Test
