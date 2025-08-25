@@ -1,6 +1,7 @@
 package com.real.interview.service;
 
 import com.real.interview.entity.MovieEntity;
+import com.real.interview.exception.DataNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +19,28 @@ public interface MovieService {
      * @return - status
      */
     MovieEntity addMovie(MovieEntity movie);
+
+    /**
+     * get a movie by id
+     *
+     * @param id
+     * @return
+     */
+    MovieEntity getMovie(Long id) throws DataNotFoundException;
+
+    /**
+     * update a movie by id
+     *
+     * @param movieEntity
+     * @return
+     */
+    MovieEntity update(MovieEntity movieEntity) throws DataNotFoundException;
+
+    /**
+     * delete a movie by id
+     *
+     * @param id
+     * @return
+     */
+    String delete(Long id) throws DataNotFoundException;
 }

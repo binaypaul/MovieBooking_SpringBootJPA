@@ -2,11 +2,13 @@ package com.real.interview.service.impl;
 
 import com.real.interview.entity.CastEntity;
 import com.real.interview.entity.MovieEntity;
+import com.real.interview.exception.DataNotFoundException;
 import com.real.interview.repository.CastRepository;
 import com.real.interview.repository.MovieRepository;
 import com.real.interview.service.MovieService;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.OptimisticLockingFailureException;
@@ -80,5 +82,46 @@ public class MovieServiceImpl implements MovieService {
             }
         }
         return resme;
+    }
+
+    /**
+     * get a movie by id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public MovieEntity getMovie(Long id) throws DataNotFoundException {
+        Optional<MovieEntity> movieEntityOptional = movieRepository.findById(id);
+        if (movieEntityOptional.isPresent()) {
+            return movieEntityOptional.get();
+        } else {
+            throw new DataNotFoundException(id, MovieEntity.class);
+        }
+    }
+
+    /**
+     * update a movie by id
+     *
+     * @param movieEntity
+     * @return
+     */
+    @Override
+    public MovieEntity update(MovieEntity movieEntity) throws DataNotFoundException {
+        getMovie(movieEntity.getId());
+        return addMovie(movieEntity);
+    }
+
+    /**
+     * delete a movie by id
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public String delete(Long id) throws DataNotFoundException {
+        MovieEntity movieEntity = getMovie(id);
+        movieRepository.delete(movieEntity);
+        return "Delete successful.";
     }
 }

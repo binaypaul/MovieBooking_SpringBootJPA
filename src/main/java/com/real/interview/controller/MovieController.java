@@ -1,12 +1,14 @@
 package com.real.interview.controller;
 
 import com.real.interview.entity.MovieEntity;
+import com.real.interview.exception.DataNotFoundException;
 import com.real.interview.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,12 +50,49 @@ public class MovieController {
     /**
      * Add a movie
      *
-     * @param movie
+     * @param movieEntity
      * @return
      */
-    @PostMapping("/add")
-    public ResponseEntity<MovieEntity> addMovie(@RequestBody MovieEntity movie) {
-        MovieEntity status = movieServiceImpl.addMovie(movie);
+    @PostMapping("/create")
+    public ResponseEntity<MovieEntity> create(@RequestBody MovieEntity movieEntity) {
+        MovieEntity status = movieServiceImpl.addMovie(movieEntity);
+        return new ResponseEntity<>(status, HttpStatus.CREATED);
+    }
+
+    /**
+     * get a movie by id
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get/{id}")
+    public ResponseEntity<MovieEntity> get(@PathVariable("id") Long id)
+            throws DataNotFoundException {
+        MovieEntity status = movieServiceImpl.getMovie(id);
+        return ResponseEntity.ok(status);
+    }
+
+    /**
+     * update a movie by id
+     *
+     * @param movieEntity
+     * @return
+     */
+    @PutMapping("/update")
+    public ResponseEntity<MovieEntity> update(@RequestBody MovieEntity movieEntity) throws DataNotFoundException {
+        MovieEntity status = movieServiceImpl.update(movieEntity);
+        return ResponseEntity.ok(status);
+    }
+
+    /**
+     * delete a movie by id
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) throws DataNotFoundException {
+        String status = movieServiceImpl.delete(id);
         return ResponseEntity.ok(status);
     }
 }
