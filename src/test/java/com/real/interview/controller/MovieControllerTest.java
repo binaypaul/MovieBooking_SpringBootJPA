@@ -43,8 +43,8 @@ class MovieControllerTest {
         when(movieService.getAll(any(Pageable.class))).thenReturn(page);
 
         mockMvc.perform(get("/movie/getall")
-                        .param("page", "0")
-                        .param("size", "5")
+                        .param("page", "0")         //both are identical
+                        .queryParam("size", "5")    //both are identical
                         .param("sortBy", "id")
                         .param("asc", "true"))
                 .andExpect(status().isOk())
