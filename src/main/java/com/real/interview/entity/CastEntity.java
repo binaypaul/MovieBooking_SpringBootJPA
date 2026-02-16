@@ -31,13 +31,13 @@ public class CastEntity {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private AddressEntity address;
-
     @JsonIgnore
     @ManyToMany(mappedBy = "casts", cascade = CascadeType.ALL)
     private List<MovieEntity> movies;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    private AddressEntity address;
 
     @Version
     private Long version;

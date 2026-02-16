@@ -21,7 +21,9 @@ public class MovieEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqGen")
     @Column(columnDefinition = "BIGINT CHECK (id <= 999999)")
     private Long id;
+
     private String name;
+
     private Integer rating;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
